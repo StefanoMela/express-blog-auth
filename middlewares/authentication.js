@@ -14,23 +14,24 @@ const authProcedure = (req, res, next) => {
     const authorization = req.headers.authorization;
 
     if (!authorization) {
-        return res.status(401).send('Non sei autenticato')
-    }
+        return res.status(401).json({
+            error: "401",
+            message: "Non hai i permessi necessari"
+        });
 
-    //  console.log('auth:' + authorization);
+    }
 
     const token = authorization.split(' ')[1];
 
-    //  console.log('token:' + token);
-
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) {
-            return res.status(403).send(err);
+            return res.status(403).json({
+                error: "403",
+                message: "Token scaduto"
+            });
         }
 
         req.user = user;
-
-        //  console.log(req.user);
 
         next();
     });
@@ -40,7 +41,10 @@ const adminWare = (req, res, next) => {
     const { username, password } = req.user;
     const user = users.find(u => u.username === username && u.password === password);
     if (!user || !user.admin) {
-        return res.status(403).send('Devi essere admin per poterlo farle');
+        return res.status(403).json({
+            error: "403",
+            message: "Devi essere admin per poterlo fare!"
+        });
     }
     next();
 }
