@@ -17,7 +17,11 @@ const authProcedure = (req, res, next) => {
         return res.status(401).send('Non sei autenticato')
     }
 
-    const token = authorization.split('')[1];
+    console.log('auth:' + authorization);
+
+    const token = authorization.split(' ')[1];
+
+    console.log('token:' + token);
 
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) {
@@ -25,12 +29,25 @@ const authProcedure = (req, res, next) => {
         }
 
         req.user = user;
+
         console.log(req.user);
+
         next();
     });
 }
 
 
+const adminWare = (req, res, next) => {
+    const {username, password} = req.user;
+    const user = users.find(u => u.username === username && u.password === password);
+    if(!user || !user.admin){
+        return res.status(403).send('Devi essere admin per poterlo farle');
+    }
+    next();
+}
+
+
 module.exports = {
     authProcedure,
+    adminWare
 }

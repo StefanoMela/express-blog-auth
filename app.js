@@ -22,7 +22,7 @@ app.post('/login', (req, res) => {
     res.send(token);
 })
 
-app.use('/posts', authMdw.authProcedure, postRouter);
+app.use('/posts', postRouter);
 
 app.listen(3000, () => {
     console.log('Server avviato su http://localhost:3000');
