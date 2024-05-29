@@ -6,7 +6,7 @@ const authMdw = require('../middlewares/authentication');
 
 router.get('/', postController.index);
 
-router.post('/create', authMdw.authProcedure, postController.create);
+router.post('/store', authMdw.authProcedure, postController.store);
 
 router.get('/admin',authMdw.authProcedure, authMdw.adminWare, postController.adminPage);
 

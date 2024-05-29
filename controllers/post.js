@@ -1,11 +1,10 @@
 const posts = require('../data/db/posts.json');
 
-
 const index = (req, res) => {
     res.send(posts)
 }
 
-const create = (req, res) => {
+const store = (req, res) => {
     res.send('Complimenti, sei loggato e puoi postare');
 }
 
@@ -22,7 +21,7 @@ const adminPage = (req, res) => {
 
 module.exports = {
     index,
-    create,
+    store,
     show,
     adminPage,
 }
