@@ -8,7 +8,7 @@ router.get('/', postController.index);
 
 router.post('/store', authMdw.authProcedure, postController.store);
 
-router.get('/admin',authMdw.authProcedure, authMdw.adminWare, postController.adminPage);
+router.get('/admin', authMdw.authProcedure, authMdw.adminWare, postController.adminPage);
 
 router.get('/:slug', postController.show);
 
